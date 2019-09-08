@@ -1,11 +1,12 @@
 package com.example.photogallery.Fragment;
 
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,9 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.photogallery.Model.GalleryItem;
 import com.example.photogallery.R;
-import com.example.photogallery.http.FlickrFetchr;
+import com.example.photogallery.JSON.FlickrFetchr;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +29,8 @@ public class PhotoGalleryFragment extends Fragment {
     private final static String TAG = "PhotoGalleryFragment";
 
     private List<GalleryItem> mItems = new ArrayList<>();
+
+    private ImageView mPhotoImageView;
 
     public static PhotoGalleryFragment newInstance(){
         return new PhotoGalleryFragment();
@@ -70,11 +72,19 @@ public class PhotoGalleryFragment extends Fragment {
         public PhotoHolder(View itemView){
             super(itemView);
 
-            mTitleTextView = (TextView) itemView;
+            //mTitleTextView = (TextView) itemView;
+            mPhotoImageView = (ImageView) itemView.findViewById(R.id.item_image_view);
         }
 
+        /*
         public void bindGalleryItem(GalleryItem item){
             mTitleTextView.setText(item.toString());
+        }
+
+         */
+
+        public void bindDrawable(Drawable drawable){
+            mPhotoImageView.setImageDrawable(drawable);
         }
     }
 
@@ -90,14 +100,22 @@ public class PhotoGalleryFragment extends Fragment {
         @Override
         public PhotoHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-            TextView textView = new TextView(getActivity());
-            return new PhotoHolder(textView);
+//            TextView textView = new TextView(getActivity());
+//            return new PhotoHolder(textView);
+            LayoutInflater inflater = LayoutInflater.from(getActivity());
+            View v = inflater.inflate(R.layout.list_item_gallery,parent,false);
+
+            return new PhotoHolder(v);
         }
 
         @Override
         public void onBindViewHolder(@NonNull PhotoHolder holder, int position) {
             GalleryItem galleryItem = mGalleryItems.get(position);
-            holder.bindGalleryItem(galleryItem);
+            //holder.bindGalleryItem(galleryItem);
+
+            //绑定默认图片
+            Drawable placeHolder = getResources().getDrawable(R.drawable.bill_up_close);
+            holder.bindDrawable(placeHolder);
         }
 
         @Override

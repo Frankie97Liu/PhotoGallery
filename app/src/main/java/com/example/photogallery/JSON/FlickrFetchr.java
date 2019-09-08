@@ -1,4 +1,4 @@
-package com.example.photogallery.http;
+package com.example.photogallery.JSON;
 
 import android.net.Uri;
 import android.util.Log;
