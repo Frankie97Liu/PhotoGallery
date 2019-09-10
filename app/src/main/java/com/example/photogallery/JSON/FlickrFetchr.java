@@ -98,16 +98,17 @@ public class FlickrFetchr {
     //解析JSON图片
     private void parseItems(List<GalleryItem>items,JSONObject jsonObject) throws IOException,JSONException{
 
-        //JSONObject photosJsonObject = jsonObject.getJSONObject(" ");
+        //JSONObject photosJsonObject = jsonObject.getJSONObject("photos");
         JSONArray photoJsonArray = jsonObject.getJSONArray("hits");
 
         for (int i = 0; i<photoJsonArray.length();i++){
             JSONObject photoJsonObject = photoJsonArray.getJSONObject(i);
 
             GalleryItem item = new GalleryItem();
+
             item.setId(photoJsonObject.getString("id"));
             item.setCaption(photoJsonObject.getString("user"));
-            item.setUrl(photoJsonObject.getString("previewURL"));
+            item.setUrl(photoJsonObject.getString("largeImageURL"));
 
             items.add(item);
         }
